@@ -7,6 +7,22 @@ services:
       - 5432:5432
     volumes:
       - pgdata:/var/lib/postgresql
+    networks:
+      - app-network
+
+  app:
+    ports:
+      - 8000:8000
+    build: notes-management-api:latest
+    env_file:
+      - .env
+    depends_on:
+      - postgres_db
+    networks:
+      - app-network
 
 volumes:
   pgdata:
+
+networks:
+  app-network:
